@@ -152,6 +152,176 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-Mac下国内安装Homebrew教程" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/06/01/Mac%E4%B8%8B%E5%9B%BD%E5%86%85%E5%AE%89%E8%A3%85Homebrew%E6%95%99%E7%A8%8B/">Mac下国内安装Homebrew教程</a>
+    </h1>
+  
+
+        
+        <a href="/2021/06/01/Mac%E4%B8%8B%E5%9B%BD%E5%86%85%E5%AE%89%E8%A3%85Homebrew%E6%95%99%E7%A8%8B/" class="archive-article-date">
+  	<time datetime="2021-06-01T11:08:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-06-01</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xibushijie/p/13335988.html">原文章网址</a></p>
+<p><font color='red'> 推荐</font><a target="_blank" rel="noopener" href="https://mirror.tuna.tsinghua.edu.cn/help/homebrew/">清华大学开源软件镜像站教程</a></p>
+<p>homebrew是一款包管理工具，目前支持macOS和linux系统。主要有四部分组成：brew、homebrew-core、homebrew-cask、homebrew-bottles。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>brew</td>
+<td>Homebrew 源代码仓库</td>
+</tr>
+<tr>
+<td>homebrew-core</td>
+<td>Homebrew 核心源</td>
+</tr>
+<tr>
+<td>homebrew-cask</td>
+<td>提供 macOS 应用和大型二进制文件的安装</td>
+</tr>
+<tr>
+<td>homebrew-bottles</td>
+<td>预编译二进制软件包</td>
+</tr>
+</tbody></table>
+<h3 id="1、脚本说明"><a href="#1、脚本说明" class="headerlink" title="1、脚本说明"></a>1、脚本说明</h3><p><code>Homebrew</code>默认安装脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>如果你等待一段时间之后遇到下面提示，就说明无法访问官方脚本地址：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl: (7) Failed to connect to raw.githubusercontent.com port 443: Operation timed out</span><br></pre></td></tr></table></figure>
+
+<p><font color='red'>PS: 修改hosts可以解决homebrew域名解析被污染的问题</font></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># 在hosts中添加这边行，解决443问题</span><br><span class="line">199.232.28.133 raw.githubusercontent.com</span><br></pre></td></tr></table></figure>
+
+<p>请使用下面的脚本:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://cdn.jsdelivr.net/gh/ineo6/homebrew-install/install)&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、执行命令"><a href="#2、执行命令" class="headerlink" title="2、执行命令"></a>2、执行命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://cdn.jsdelivr.net/gh/ineo6/homebrew-install/install)&quot;</span><br></pre></td></tr></table></figure>
+
+<p>如果命令执行中卡在下面信息：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">==&gt; Tapping homebrew/core</span><br><span class="line">Cloning into &#x27;/usr/local/Homebrew/Library/Taps/homebrew/homebrew-core&#x27;...</span><br></pre></td></tr></table></figure>
+
+<p>请<code>Command + C</code>中断脚本执行如下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd &quot;$(brew --repo)/Library/Taps/&quot;</span><br><span class="line">mkdir homebrew &amp;&amp; cd homebrew</span><br><span class="line">git clone git://mirrors.ustc.edu.cn/homebrew-core.git</span><br></pre></td></tr></table></figure>
+
+<p>成功执行之后继续执行前文的安装命令。</p>
+<p>最后看到<code>==&gt; Installation successful!</code>就说明安装成功了。</p>
+<p>最最后执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew update</span><br></pre></td></tr></table></figure>
+
+<p><code>cask</code>同样也有首次下载缓慢的问题，解决方法大致同上：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd &quot;$(brew --repo)/Library/Taps/&quot;cd homebrewgit clone https://mirrors.ustc.edu.cn/homebrew-cask.git</span><br></pre></td></tr></table></figure>
+
+<h3 id="3、卸载Homebrew"><a href="#3、卸载Homebrew" class="headerlink" title="3、卸载Homebrew"></a>3、卸载Homebrew</h3><p>使用官方脚本同样会遇到<code>uninstall</code>地址无法访问问题，可以替换为下面脚本：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://cdn.jsdelivr.net/gh/ineo6/homebrew-install/uninstall)&quot;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4、设置镜像"><a href="#4、设置镜像" class="headerlink" title="4、设置镜像"></a>4、设置镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git -C &quot;$(brew --repo)&quot; remote set-url origin https://mirrors.ustc.edu.cn/brew.gitgit -C &quot;$(brew --repo homebrew/core)&quot; remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.gitgit -C &quot;$(brew --repo homebrew/cask)&quot; remote set-url origin https://mirrors.ustc.edu.cn/homebrew-cask.gitbrew update# 长期替换homebrew-bottlesecho &#x27;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles&#x27; &gt;&gt; ~/.bash_profilesource ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+<p>注意<code>bottles</code>可以临时设置，在终端执行下面命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.ustc.edu.cn/homebrew-bottles</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-1中科大源"><a href="#4-1中科大源" class="headerlink" title="4.1中科大源"></a>4.1中科大源</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git -C &quot;$(brew --repo)&quot; remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.gitgit -C &quot;$(brew --repo homebrew/core)&quot; remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.gitgit -C &quot;$(brew --repo homebrew/cask)&quot; remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.gitbrew update# 长期替换homebrew-bottlesecho &#x27;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&#x27; &gt;&gt; ~/.bash_profilesource ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-2清华大学源"><a href="#4-2清华大学源" class="headerlink" title="4.2清华大学源"></a>4.2清华大学源</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git -C &quot;$(brew --repo)&quot; remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/brew.gitgit -C &quot;$(brew --repo homebrew/core)&quot; remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-core.gitgit -C &quot;$(brew --repo homebrew/cask)&quot; remote set-url origin https://mirrors.tuna.tsinghua.edu.cn/git/homebrew/homebrew-cask.gitbrew update# 长期替换homebrew-bottlesecho &#x27;export HOMEBREW_BOTTLE_DOMAIN=https://mirrors.tuna.tsinghua.edu.cn/homebrew-bottles&#x27; &gt;&gt; ~/.bash_profilesource ~/.bash_profile</span><br></pre></td></tr></table></figure>
+
+<h4 id="4-3恢复"><a href="#4-3恢复" class="headerlink" title="4.3恢复"></a>4.3恢复</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git -C &quot;$(brew --repo)&quot; remote set-url origin https://github.com/Homebrew/brew.gitgit -C &quot;$(brew --repo homebrew/core)&quot; remote set-url origin https://github.com/Homebrew/homebrew-core.gitgit -C &quot;$(brew --repo homebrew/cask)&quot; remote set-url origin https://github.com/Homebrew/homebrew-cask.gitbrew update</span><br></pre></td></tr></table></figure>
+
+<p><code>homebrew-bottles</code>配置只能手动删除，将 <code>~/.bash_profile</code>文件中的 <code>HOMEBREW_BOTTLE_DOMAIN=https://mirrors.xxx.com</code>内容删除，并执行 <code>source ~/.bash_profile</code>。</p>
+<h3 id="5、其他"><a href="#5、其他" class="headerlink" title="5、其他"></a>5、其他</h3><h4 id="5-1cask"><a href="#5-1cask" class="headerlink" title="5.1cask"></a>5.1cask</h4><p>目前<code>cask</code>是从<code>GitHub</code>上读取软件源，而<code>GitHub Api</code>对匿名访问有限制，如果使用比较频繁的话，可以申请<code>Api Token</code>，然后在环境变量中配置到<code>HOMEBREW_GITHUB_API_TOKEN</code>。</p>
+<p>在<code>.bash_profile</code>中追加:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export HOMEBREW_GITHUB_API_TOKEN=yourtoken</span><br></pre></td></tr></table></figure>
+
+<p>注意：因为<code>cask</code>是基于<code>GitHub</code>下载软件，所以目前是无法加速的。</p>
+<h3 id="6、总结"><a href="#6、总结" class="headerlink" title="6、总结"></a>6、总结</h3><p>在前面的过程中我们把<code>brew</code>和<code>homebrew-core</code>的地址都指向到中科大镜像。</p>
+<p>原理是通过修改<code>install</code>脚本，在里面预设镜像地址来做到的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/ruby# This script installs to /usr/local only. To install elsewhere (which is# unsupported) you can untar https://github.com/Homebrew/brew/tarball/master# anywhere you like.HOMEBREW_PREFIX = &quot;/usr/local&quot;.freezeHOMEBREW_REPOSITORY = &quot;/usr/local/Homebrew&quot;.freezeHOMEBREW_CACHE = &quot;#&#123;ENV[&quot;HOME&quot;]&#125;/Library/Caches/Homebrew&quot;.freeze# 这里替换了BREW_REPOBREW_REPO = &quot;https://mirrors.ustc.edu.cn/brew.git&quot;.freeze</span><br></pre></td></tr></table></figure>
+
+<p>最后不完美的地方是我们只能预设<code>brew</code>镜像，没找到比较好的办法预设<code>homebrew-core</code>、<code>homebrew-cask</code>的<code>git</code>地址。</p>
+<p>[<a target="_blank" rel="noopener" href="https://mirror.tuna.tsinghua.edu.cn/help/homebrew/]">https://mirror.tuna.tsinghua.edu.cn/help/homebrew/]</a>: </p>
+<p>[<a target="_blank" rel="noopener" href="https://mirror.tuna.tsinghua.edu.cn/help/homebrew/]">https://mirror.tuna.tsinghua.edu.cn/help/homebrew/]</a>: </p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Homebrew</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">教程</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/mac//" class="article-tag-list-link color4">mac</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/06/01/Mac%E4%B8%8B%E5%9B%BD%E5%86%85%E5%AE%89%E8%A3%85Homebrew%E6%95%99%E7%A8%8B/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-iterm2美化配置" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -444,6 +614,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
             <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
           </label>
           <ul class="article-tag-list" q-show="showTags">
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">Homebrew</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">教程</a>
+              </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color4">zsh</a>
